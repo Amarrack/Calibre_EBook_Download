@@ -91,7 +91,7 @@ DOWNLOAD_DIR = r"C:\Users\Userprofile\Desktop\Downloaded Ebooks"
 You can tweak `MAX_THREADS` to increase or decrease parallel downloads:
 
 ```python
-MAX_THREADS = 20  # Higher = faster downloads, but more strain on the server
+MAX_THREADS = 5  # Higher = faster downloads, but more strain on the server. Anything above 5 seems to start erroring out.
 ```
 
 ---
