@@ -1,9 +1,110 @@
-# Calibre_EBook_Download
-This will allow you to download all Ebooks from public Calibre Libraries
+# Calibre Library Downloader
 
-1. You will need to install Python.
-     - Run ```pip install requests```
-     - Use a public Calibre Library of your choice
-     - In the Base_URL Change the IP Address and Port number to the library
-              - BASE_URL = "http://IPAddress:8080/get/EPUB/{}/Calibre"
-       
+## Overview
+
+This Python script allows you to **automatically scan and download** all available books from a **public Calibre-Web library**. It dynamically detects the available book IDs, downloads them in parallel using multithreading, and saves them with their original filenames.
+
+⚠ **Warning:** This script is provided **as-is**, without any guarantees. **Use responsibly** and ensure you have permission to download from the target Calibre library.
+
+---
+
+## Features
+
+- **Automatic book detection** – Finds the highest and lowest book IDs.
+- **Multithreaded scanning & downloading** – Increases speed significantly.
+- **Saves books with their original filenames** – No need for manual renaming.
+- **Works on any system** – Dynamically sets the download directory to the user's Desktop.
+
+---
+
+## Requirements
+
+Ensure you have **Python 3.x** installed along with the required dependencies:
+
+```sh
+pip install requests
+```
+
+To enable **faster scanning and downloading**, install `concurrent.futures` (included in Python 3 by default):
+
+```sh
+pip install futures
+```
+
+---
+
+## Usage
+
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/YOUR_GITHUB_USERNAME/calibre-library-downloader.git
+   cd calibre-library-downloader
+   ```
+2. **Run the script**:
+   ```sh
+   python downloader.py
+   ```
+   The script will:
+   - Scan the library for available book IDs
+   - Download the books to `Downloaded_Ebooks` on your Desktop
+
+---
+
+## Customization
+
+You can modify the script to fit your needs:
+
+### Change the Library URL
+
+Replace the `BASE_URL` value with your target library:
+
+```python
+BASE_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
+```
+
+### Adjust the Maximum Scanning Range
+
+If your library has more books, change the `MAX_SCAN_ID`:
+
+```python
+MAX_SCAN_ID = 90000  # Adjust to scan up to 50,000 books
+```
+
+### Modify the Download Directory
+
+By default, books are saved to `Downloaded_Ebooks` on the Desktop. Change `DOWNLOAD_DIR` if needed:
+
+```python
+DOWNLOAD_DIR = "C:/Your/Custom/Path"
+```
+
+### Increase Download Speed
+
+You can tweak `MAX_THREADS` to increase or decrease parallel downloads:
+
+```python
+MAX_THREADS = 20  # Higher = faster downloads, but more strain on the server
+```
+
+---
+
+## Disclaimer
+
+This script is intended for **personal use only**. Do not use it for unauthorized access or distribution of copyrighted materials. The author is **not responsible** for any misuse, server issues, or potential violations of terms of service.
+
+**Use at your own risk.**
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contributions
+
+Pull requests and improvements are welcome! If you encounter issues, please submit a GitHub issue.
+
+Happy downloading! 🚀
+
