@@ -9,6 +9,7 @@ USER_DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 DOWNLOAD_DIR = os.path.join(USER_DESKTOP, "Downloaded_Ebooks")
 BASE_URL = "http://IPAddress:PortNumber/get/EPUB/{}/Calibre" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
 MAX_THREADS = 10  # Adjust for performance
+MAX_SCAN_ID = 8000
 
 def sanitize_filename(filename):
     """ Cleans up filenames by removing invalid characters for Windows. """
@@ -67,4 +68,4 @@ def download_all_books(start_id=1000, end_id=1):
                 print(f"⚠️ Unexpected error on Book {book_id}: {e}")
 
 if __name__ == "__main__":
-    download_all_books(7000, 1)  # Adjust range as needed
+    download_all_books(MAX_SCAN_ID, 1)  # Adjust range as needed
