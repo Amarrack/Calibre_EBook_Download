@@ -56,10 +56,13 @@ You can modify the script to fit your needs:
 
 ### Change the Library URL
 
-Replace the `BASE_URL` value with your target library:
+Replace the `EPUB_URL` and `MOBI_URL` value with your target library:
 
 ```python
-BASE_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
+EPUB_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
+```
+```python
+MOBI_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
 ```
 
 ### Adjust the Maximum Scanning Range
