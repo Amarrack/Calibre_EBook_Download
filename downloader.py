@@ -9,7 +9,7 @@ USER_DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 DOWNLOAD_DIR = os.path.join(USER_DESKTOP, "Downloaded_Ebooks")
 BASE_URL = "http://IPAddress:PortNumber/get/EPUB/{}/Calibre" #Change this to your DNS\IP Address and port number of your Calibre Library.
 MAX_THREADS = 25  # Adjust for performance
-MAX_SCAN_ID = 99999  # Highest possible book ID to scan from
+MAX_SCAN_ID = 20000  # Highest possible book ID to scan from
 
 def sanitize_filename(filename):
     """ Cleans up filenames by removing invalid characters for Windows. """
