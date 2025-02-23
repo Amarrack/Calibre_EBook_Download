@@ -67,7 +67,7 @@ BASE_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
 If your library has more books, change the `MAX_SCAN_ID`:
 
 ```python
-MAX_SCAN_ID = 90000  # Adjust to scan up to 50,000 books
+MAX_SCAN_ID = 20000  # Adjust to scan up to however many books are in your library.
 ```
 
 ### Modify the Download Directory
@@ -77,6 +77,11 @@ By default, books are saved to `Downloaded_Ebooks` on the Desktop. Change `DOWNL
 ```python
 DOWNLOAD_DIR = "C:/Your/Custom/Path"
 ```
+On Windows it may need to look something like this
+```python
+DOWNLOAD_DIR = r"C:\Users\Userprofile\Desktop\Downloaded Ebooks"
+```
+
 
 ### Increase Download Speed
 
