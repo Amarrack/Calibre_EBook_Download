@@ -67,7 +67,7 @@ BASE_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
 If your library has more books, change the `MAX_SCAN_ID`:
 
 ```python
-MAX_SCAN_ID = 20000  # Adjust to scan up to however many books are in your library.
+MAX_SCAN_ID = 8000  # Adjust to scan up to however many books are in your library.
 ```
 
 ### Modify the Download Directory
