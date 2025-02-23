@@ -10,7 +10,7 @@ USER_DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 DOWNLOAD_DIR = os.path.join(USER_DESKTOP, "Downloaded_Ebooks")
 EPUB_URL = "http://IPAddress:Port/get/EPUB/{}/Library" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
 MOBI_URL = "http://IPAddress:Port/get/MOBI/{}/Library" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
-MAX_THREADS = 5  # Adjust for performance
+MAX_THREADS = 5  # Adjust for performance. Anything above 5 seems to start erroring out.
 MAX_SCANID = 14030
 
 def sanitize_filename(filename):
