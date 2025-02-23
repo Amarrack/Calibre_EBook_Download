@@ -35,7 +35,7 @@ pip install futures
 
 ## Usage
 
-1. **Clone the repository**:
+1. **Clone the repository**: (Or just download the .PY File)
    ```sh
    git clone https://github.com/YOUR_GITHUB_USERNAME/calibre-library-downloader.git
    cd calibre-library-downloader
