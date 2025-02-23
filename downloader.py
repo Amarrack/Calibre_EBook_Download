@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # Detect the desktop path dynamically for any user
 USER_DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 DOWNLOAD_DIR = os.path.join(USER_DESKTOP, "Downloaded_Ebooks")
-BASE_URL = "http://IPAddress:PortNumber/get/EPUB/{}/Calibre" #Change this to your DNS\IP Address and port number of your Calibre Library.
+BASE_URL = "http://IPAddress:PortNumber/get/EPUB/{}/Calibre" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
 MAX_THREADS = 25  # Adjust for performance
 MAX_SCAN_ID = 20000  # Highest possible book ID to scan from
 
