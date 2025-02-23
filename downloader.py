@@ -8,8 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 USER_DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 DOWNLOAD_DIR = os.path.join(USER_DESKTOP, "Downloaded_Ebooks")
 BASE_URL = "http://IPAddress:PortNumber/get/EPUB/{}/Calibre" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
-MAX_THREADS = 25  # Adjust for performance
-MAX_SCAN_ID = 20000  # Highest possible book ID to scan from
+MAX_THREADS = 10  # Adjust for performance
 
 def sanitize_filename(filename):
     """ Cleans up filenames by removing invalid characters for Windows. """
@@ -30,39 +29,6 @@ def extract_filename(response, book_id):
     
     # Fallback if no filename is found
     return f"Book_{book_id}.epub"
-
-def book_exists(book_id):
-    """ Checks if a book exists by sending a HEAD request. """
-    url = BASE_URL.format(book_id)
-    try:
-        response = requests.head(url, timeout=5)  # HEAD is faster than GET for checking existence
-        return response.status_code == 200
-    except requests.RequestException:
-        return False
-
-def find_book_id_range():
-    """ Multithreaded scan for the highest and lowest book ID. """
-    print("🔍 Scanning for available book IDs (multithreaded) This may take a while...")
-
-    def check_id(book_id):
-        return book_id if book_exists(book_id) else None
-
-    # Scan for highest ID
-    with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-        future_to_id = {executor.submit(check_id, book_id): book_id for book_id in range(MAX_SCAN_ID, 0, -1)}
-        highest_id = next((future.result() for future in as_completed(future_to_id) if future.result()), None)
-
-    if highest_id is None:
-        print("❌ No books found in the library.")
-        return None, None
-
-    # Scan for lowest ID
-    with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-        future_to_id = {executor.submit(check_id, book_id): book_id for book_id in range(1, highest_id + 1)}
-        lowest_id = next((future.result() for future in as_completed(future_to_id) if future.result()), None)
-
-    print(f"📚 Found books from ID {lowest_id} to {highest_id}")
-    return lowest_id, highest_id
 
 def download_book(book_id):
     """ Attempts to download a book and saves it with its original filename. """
@@ -86,16 +52,12 @@ def download_book(book_id):
     except Exception as e:
         print(f"⚠️ Error downloading Book {book_id}: {e}")
 
-def download_all_books():
-    """ Automatically detects the available book range and downloads them. """
-    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
-
-    lowest_id, highest_id = find_book_id_range()
-    if lowest_id is None or highest_id is None:
-        return
+def download_all_books(start_id=1000, end_id=1):
+    """ Loops through book IDs and downloads them using multiple threads. """
+    os.makedirs(DOWNLOAD_DIR, exist_ok=True)  # Ensure folder exists
 
     with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-        future_to_book = {executor.submit(download_book, book_id): book_id for book_id in range(highest_id, lowest_id - 1, -1)}
+        future_to_book = {executor.submit(download_book, book_id): book_id for book_id in range(start_id, end_id - 1, -1)}
 
         for future in as_completed(future_to_book):
             book_id = future_to_book[future]
@@ -105,4 +67,4 @@ def download_all_books():
                 print(f"⚠️ Unexpected error on Book {book_id}: {e}")
 
 if __name__ == "__main__":
-    download_all_books()
+    download_all_books(7000, 1)  # Adjust range as needed
