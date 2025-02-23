@@ -56,7 +56,7 @@ You can modify the script to fit your needs:
 
 ### Change the Library URL
 
-Replace the `EPUB_URL` and `MOBI_URL` value with your target library:
+Replace the `EPUB_URL` and `MOBI_URL` value with your target library: **NOTE: This can change depending on what was setup. Easiest way I've found is to go to a book, right click download and copy link address. Paste it into a text editor. For the examples below "Calibre" is the Library name. Just change it to whatever the final word is for the download link
 
 ```python
 EPUB_URL = "http://your-calibre-web-instance/get/EPUB/{}/Calibre"
