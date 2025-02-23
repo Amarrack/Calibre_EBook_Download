@@ -7,9 +7,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # Detect the desktop path dynamically for any user
 USER_DESKTOP = os.path.join(os.path.expanduser("~"), "Desktop")
 DOWNLOAD_DIR = os.path.join(USER_DESKTOP, "Downloaded_Ebooks")
-BASE_URL = "http://IPAddress:PortNumber/get/EPUB/{}/Calibre" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
+EPUB_URL = "http://IPAddress:Port/get/EPUB/{}/Library" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
+MOBI_URL = "http://IPAddress:Port/get/MOBI/{}/Library" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
 MAX_THREADS = 10  # Adjust for performance
-MAX_SCAN_ID = 8000
+MAX_SCANID = 8000
 
 def sanitize_filename(filename):
     """ Cleans up filenames by removing invalid characters for Windows. """
@@ -33,25 +34,28 @@ def extract_filename(response, book_id):
 
 def download_book(book_id):
     """ Attempts to download a book and saves it with its original filename. """
-    url = BASE_URL.format(book_id)
-
-    try:
-        response = requests.get(url, stream=True, timeout=10)
-        
-        if response.status_code == 200:
-            filename = extract_filename(response, book_id)
-            filepath = os.path.join(DOWNLOAD_DIR, filename)
-
-            with open(filepath, "wb") as f:
-                for chunk in response.iter_content(chunk_size=1024):
-                    f.write(chunk)
+    urls = [EPUB_URL.format(book_id), MOBI_URL.format(book_id)]
+    
+    for url in urls:
+        try:
+            response = requests.get(url, stream=True, timeout=10)
             
-            print(f"✅ Downloaded: {filename}")
-        else:
-            print(f"❌ Book {book_id} not found (HTTP {response.status_code})")
+            if response.status_code == 200:
+                filename = extract_filename(response, book_id)
+                filepath = os.path.join(DOWNLOAD_DIR, filename)
 
-    except Exception as e:
-        print(f"⚠️ Error downloading Book {book_id}: {e}")
+                with open(filepath, "wb") as f:
+                    for chunk in response.iter_content(chunk_size=1024):
+                        f.write(chunk)
+                
+                print(f"✅ Downloaded: {filename}")
+                return  # Exit function after successful download
+            
+        except Exception as e:
+            continue  # Try next URL if this one fails
+    
+    # If we get here, both URLs failed
+    print(f"❌ Book {book_id} not found (HTTP 404)")
 
 def download_all_books(start_id=1000, end_id=1):
     """ Loops through book IDs and downloads them using multiple threads. """
@@ -68,4 +72,4 @@ def download_all_books(start_id=1000, end_id=1):
                 print(f"⚠️ Unexpected error on Book {book_id}: {e}")
 
 if __name__ == "__main__":
-    download_all_books(MAX_SCAN_ID, 1)  # Adjust range as needed
+    download_all_books(MAX_SCANID, 1)  # Adjust range as needed
