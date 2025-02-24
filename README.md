@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Python script allows you to **automatically scan and download** all available books from a **public Calibre-Web library**. It dynamically detects the available book IDs, downloads them in parallel using multithreading, and saves them with their original filenames.
+This Python script allows you to **automatically scan and download** all available books from a **Calibre-Web library**. It downloads them in parallel using multithreading, and saves them with their original filenames to a folder of your choice.
 
 ⚠ **Warning:** This script is provided **as-is**, without any guarantees. **Use responsibly** and ensure you have permission to download from the target Calibre library.
 
@@ -46,7 +46,7 @@ pip install futures
    ```
    The script will:
    - Scan the library for available book IDs
-   - Download the books to `Downloaded_Ebooks` on your Desktop
+   - Download the books to whatever you set in the `DOWNLOAD_DIR` it will also create the folder automatically.
 
 ---
 
@@ -75,8 +75,6 @@ MAX_SCAN_ID = 8000  # Adjust to scan up to however many books are in your librar
 
 ### Modify the Download Directory
 
-By default, books are saved to `Downloaded_Ebooks` on the Desktop. Change `DOWNLOAD_DIR` if needed:
-
 ```python
 DOWNLOAD_DIR = "C:/Your/Custom/Path"
 ```
@@ -91,8 +89,14 @@ DOWNLOAD_DIR = r"C:\Users\Userprofile\Desktop\Downloaded Ebooks"
 You can tweak `MAX_THREADS` to increase or decrease parallel downloads:
 
 ```python
-MAX_THREADS = 5  # Higher = faster downloads, but more strain on the server. Anything above 5 seems to start erroring out.
+MAX_THREADS = 2  # Higher = faster downloads, but more strain on the server. Anything above 5 seems to start erroring out.
 ```
+
+---
+
+## Issues but not really issues
+
+This script only targets EPUB and MOBI books. If there are PDF's or any other book types in the library it will simply just error out and say book not found and skip that book ID.
 
 ---
 
