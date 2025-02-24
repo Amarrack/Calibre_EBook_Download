@@ -10,10 +10,8 @@ This Python script allows you to **automatically scan and download** all availab
 
 ## Features
 
-- **Automatic book detection** – Finds the highest and lowest book IDs.
-- **Multithreaded scanning & downloading** – Increases speed significantly.
+- **Multithreaded downloading** – Increases speed significantly.
 - **Saves books with their original filenames** – No need for manual renaming.
-- **Works on any system** – Dynamically sets the download directory to the user's Desktop.
 
 ---
 
