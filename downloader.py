@@ -6,11 +6,11 @@ import aiohttp
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 
-DOWNLOAD_DIR = r"G:\Ebooks" #Modify download Location here.
+DOWNLOAD_DIR = r"G:\Ebooks"
 EPUB_URL = "http://IPAddress:Port/get/EPUB/{}/Library" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
 MOBI_URL = "http://IPAddress:Port/get/MOBI/{}/Library" #Change this to your DNS\IP Address and port number of your Calibre Library. You may also have to change the "Calibre" at the end to match the name of the Library. If you go to download a book manually look the URL to find it.
-MAX_CONCURRENT = 10  # Adjust based on your network capacity
-MAX_SCANID = 6000
+MAX_CONCURRENT = 2  # Recommend leaving it at 2. It seems more stable at 2.
+MAX_SCANID = 18460 # Change depending on how many books are in the library.
 CHUNK_SIZE = 8192  # Increased from 1024 for better performance
 
 # Compile regex patterns once
